@@ -22,3 +22,33 @@ export const validateCreateProduct = (
 
   next();
 };
+
+//Update Product Validation
+export const validateUpdateProduct = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { name, price, stock, tags, description } = req.body;
+
+  if (name !== undefined && name.length < 3) {
+    return res.status(400).json({ message: "Name too short" });
+  }
+
+  if (price !== undefined && price < 0) {
+    return res.status(400).json({ message: "Invalid price" });
+  }
+
+  if (stock !== undefined && stock < 0) {
+    return res.status(400).json({ message: "Invalid stock" });
+  }
+
+  if (tags !== undefined && !Array.isArray(tags)) {
+    return res.status(400).json({ message: "Invalid tags" });
+  }
+
+  if (description !== null && typeof description !== "string") {
+    return res.status(400).json({ message: "Invalid description format" });
+  }
+  next();
+};
