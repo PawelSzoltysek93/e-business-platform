@@ -5,6 +5,7 @@ export interface ProductDocument extends Document {
   price: number;
   stock: number;
   tags: string[];
+  description?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -29,6 +30,10 @@ const ProductSchema = new Schema<ProductDocument>(
     tags: {
       type: [String],
       default: [],
+    },
+    description: {
+      type: String,
+      required: false,
     },
   },
   {

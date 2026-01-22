@@ -5,23 +5,27 @@ import { ProductModel } from "../models/product.model";
 export const getAllProducts = async (_req: Request, res: Response) => {
   try {
     const products = await ProductModel.find();
-    res.json(products);
     res.status(200);
+    res.json(products);
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: error.messagge ?? "Failed to fetch products" });
+      .json({ message: error.message ?? "Failed to fetch products" });
   }
 };
 
 //POST PRODUCT
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { name, price, stock } = req.body;
-    if (!name || price < 0 || stock < 0) {
-      return res.status(400).json({ Message: "Missing required fields" });
-    }
-    const product = await ProductModel.create(req.body);
+    const { name, price, stock, tags, description } = req.body;
+
+    const product = await ProductModel.create({
+      name,
+      price,
+      stock,
+      tags,
+      description,
+    });
     res.status(201).json(product);
   } catch (error: any) {
     res
