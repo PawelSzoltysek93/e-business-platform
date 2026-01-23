@@ -47,7 +47,11 @@ export const validateUpdateProduct = (
     return res.status(400).json({ message: "Invalid tags" });
   }
 
-  if (description !== null && typeof description !== "string") {
+  if (
+    description !== undefined &&
+    description !== null &&
+    typeof description !== "string"
+  ) {
     return res.status(400).json({ message: "Invalid description format" });
   }
   next();

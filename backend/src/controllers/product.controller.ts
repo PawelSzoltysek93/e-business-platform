@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "../models/product.model";
+import { Product } from "../models/product.model";
 import { AppError } from "../errors/AppError";
 
 // GET ALL PRODUCTS
 export const getAllProducts = async (_req: Request, res: Response) => {
-  const products = await ProductModel.find();
-
-  if (products.length === 0) {
-    throw new AppError("No products found", 404);
-  }
+  const products = await Product.find();
 
   res.status(200).json(products);
 };
@@ -17,7 +13,7 @@ export const getAllProducts = async (_req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
   const { name, price, stock, tags, description } = req.body;
 
-  const product = await ProductModel.create({
+  const product = await Product.create({
     name,
     price,
     stock,
@@ -37,7 +33,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, price, stock, tags, description } = req.body;
 
-  const updatedProduct = await ProductModel.findByIdAndUpdate(
+  const updatedProduct = await Product.findByIdAndUpdate(
     id,
     {
       ...(name !== undefined && { name }),
@@ -59,7 +55,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const deletedProduct = await ProductModel.findByIdAndDelete(id);
+  const deletedProduct = await Product.findByIdAndDelete(id);
 
   if (!deletedProduct) {
     throw new AppError("Product not found", 404);
