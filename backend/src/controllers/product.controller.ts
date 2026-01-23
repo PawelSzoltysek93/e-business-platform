@@ -54,3 +54,16 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
   res.status(200).json(updatedProduct);
 };
+
+//DELETE PRODUCT
+export const deleteProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const deletedProduct = await ProductModel.findByIdAndDelete(id);
+
+  if (!deletedProduct) {
+    throw new AppError("Product not found", 404);
+  }
+
+  res.status(204).send();
+};

@@ -3,6 +3,7 @@ import {
   getAllProducts,
   createProduct,
   updateProduct,
+  deleteProduct,
 } from "../controllers/product.controller";
 import {
   validateCreateProduct,
@@ -15,5 +16,6 @@ const router = Router();
 router.get("/", getAllProducts);
 router.post("/", validateCreateProduct, createProduct);
 router.patch("/:id", validateObjectId, validateUpdateProduct, updateProduct);
+router.delete("/:id", validateObjectId, deleteProduct);
 
 export default router;
