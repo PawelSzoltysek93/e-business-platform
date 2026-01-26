@@ -12,12 +12,32 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
   const skip = (page - 1) * limit;
 
-  const products = await Product.find({})
+  //FILTERING
+  const filter: any = {};
+
+  if (req.query.minPrice) {
+    filter.price = { ...filter.price, $gte: Number(req.query.minPrice) };
+  }
+
+  if (req.query.maxPrice) {
+    filter.price = { ...filter.price, $lte: Number(req.query.maxPrice) };
+  }
+
+  if (req.query.tag) {
+    filter.tags = req.query.tag;
+  }
+
+  if (req.query.name) {
+    filter.name = { $regex: req.query.name, $options: "i" };
+  }
+
+  //QUERY
+  const products = await Product.find(filter)
     .sort({ [sortBy]: order })
     .skip(skip)
     .limit(limit);
 
-  const total = await Product.countDocuments({});
+  const total = await Product.countDocuments(filter);
 
   res.status(200).json({
     data: products,
