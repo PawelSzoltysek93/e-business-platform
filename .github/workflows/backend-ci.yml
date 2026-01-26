@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         working-directory: backend
         env:
-          MONGO_URI: mongodb://localhost:27017/ebusiness-test
+          MONGO_TEST_URI: mongodb://localhost:27017/ebusiness-test
         run: npx vitest run
 
       - name: Build Docker image
