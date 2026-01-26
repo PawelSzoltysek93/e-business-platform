@@ -8,7 +8,7 @@ import { Product } from "../models/product.model";
 let productId: string;
 
 beforeAll(async () => {
-  await mongoose.connect("mongodb://localhost:27017/ebusiness-test");
+  await mongoose.connect(process.env.MONGO_TEST_URI as string);
 
   await Product.deleteMany({});
 

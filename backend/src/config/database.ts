@@ -1,14 +1,25 @@
 import mongoose from "mongoose";
 
-const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/ebusiness";
+const uri =
+  process.env.NODE_ENV === "test"
+    ? process.env.MONGO_TEST_URI
+    : process.env.MONGO_URI;
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
+    if (!uri) {
+      throw new Error("MongoDB URI is missing. Check environment variables.");
+    }
+
+    await mongoose.connect(uri as string);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error", error);
     process.exit(1);
   }
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+  console.log(
+    "Mongo URI used:",
+    uri?.includes("mongodb+srv") ? "ATLAS" : "LOCAL",
+  );
 };
