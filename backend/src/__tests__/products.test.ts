@@ -117,3 +117,18 @@ it("GET /api/products should filter products by minPrice", async () => {
     expect(product.price).toBeGreaterThanOrEqual(100);
   });
 });
+
+//SEARCH TEST
+it("GET /api/products should search products by text", async () => {
+  const res = await request(app).get("/api/products?q=cheap");
+
+  expect(res.status).toBe(200);
+  expect(res.body.data.length).toBeGreaterThan(0);
+
+  res.body.data.forEach((product: any) => {
+    expect(
+      product.name.toLowerCase().includes("cheap") ||
+        product.description?.toLowerCase().includes("cheap"),
+    ).toBe(true);
+  });
+});

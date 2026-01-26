@@ -14,7 +14,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
   //FILTERING
   const filter: any = {};
-
+  if (req.query.q) {
+    filter.$text = { $search: req.query.q as string };
+  }
   if (req.query.minPrice) {
     filter.price = { ...filter.price, $gte: Number(req.query.minPrice) };
   }
