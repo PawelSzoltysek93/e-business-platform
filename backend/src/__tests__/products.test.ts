@@ -16,7 +16,8 @@ describe("Products API", () => {
     const res = await request(app).get("/api/products");
 
     expect(res.status).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.meta).toBeDefined();
   });
 
   //POST TEST
