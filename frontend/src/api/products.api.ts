@@ -11,6 +11,7 @@ export interface ProductsResponse {
   };
 }
 
+//GET /products - Fetch a list of products with optional query parameters for pagination, sorting, and filtering
 export const fetchProducts = (params?: {
   page?: number;
   limit?: number;
@@ -19,4 +20,15 @@ export const fetchProducts = (params?: {
   search?: string;
 }) => {
   return http.get<ProductsResponse>("/products", { params });
+};
+
+//CREATE /products - Add a new product
+export const createProduct = (payload: {
+  name: string;
+  price: number;
+  stock: number;
+  tags: string[];
+  description?: string;
+}) => {
+  return http.post<Product>("/products", payload);
 };

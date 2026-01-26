@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100 lg:max-w-7xl lg:mx-auto">
     <header class="bg-white shadow px-6 py-4">
       <h1 class="text-xl font-bold">E-Business Platform</h1>
     </header>
