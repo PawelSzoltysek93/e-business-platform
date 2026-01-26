@@ -1,21 +1,27 @@
 services:
   mongo:
     image: mongo:6
-    container_name: mongo-ebusiness
+    container_name: mongo-ebusiness-dev
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
   backend:
-    build: .
-    container_name: backend-ebusiness
+    build:
+      context: .
+      target: builder
+    container_name: backend-ebusiness-dev
+    command: npm run dev
     ports:
       - "3000:3000"
     depends_on:
       - mongo
     environment:
       MONGO_URI: mongodb://mongo:27017/ebusiness
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   mongo_data:

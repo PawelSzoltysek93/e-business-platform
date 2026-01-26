@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/ebusiness";
+
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/ebusiness");
+    await mongoose.connect(MONGO_URI);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error", error);
